@@ -1,4 +1,4 @@
-package br.edu.ifgoiano.entidade;
+package br.edu.ifgoiano.entidades;
 
 import java.util.Date;
 
