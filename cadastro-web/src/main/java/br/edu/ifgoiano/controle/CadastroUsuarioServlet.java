@@ -1,9 +1,6 @@
 package br.edu.ifgoiano.controle;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +16,28 @@ public class CadastroUsuarioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 7869758393435911873L;
 	
-	
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String senha1 = req.getParameter("senha1");
+		String senha2 = req.getParameter("senha2");
+		
+		//Verificar se as senhas são iguais
+		if(senha1.equals(senha2)) {
+			Usuario usuario = new Usuario();
+			usuario.setNome(req.getParameter("nome"));
+			usuario.setEmail(req.getParameter("email"));
+			usuario.setSenha(senha1);
+			
+			UsuarioRepositorio repositorio = new UsuarioRepositorio();
+			repositorio.inserirUsuario(usuario);
+			
+			//redirecionar o usuário para a página de login
+			resp.sendRedirect("index.html");
+		}else {
+			//redirecionar o usuário para a mesma página de cadastro do usuário.
+			req.getRequestDispatcher("usuarioCadastro.jsp").forward(req, resp);
+		}
+	}
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,6 +47,4 @@ public class CadastroUsuarioServlet extends HttpServlet {
 		
 		req.getRequestDispatcher("usuarioListagem.jsp").forward(req, resp);
 	}
-	
-	
 }

@@ -22,6 +22,7 @@
 					<th>ID</th>
 					<th>Nome</th>
 					<th>Email</th>
+					<th>#</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,6 +30,8 @@
 					<tr class="${id.count % 2 == 0 ? 'table-primary' : 'table-secondary'}">
 						<td>${usu.id}</td>
 						<td>${usu.nome}</td>
+						<td>
+							<a class="btn btn-sucess" href="usuarioAlterar.jsp">Editar</a></td>
 						<td><a href="mailto:${usu.email}">${usu.email}</a></td>
 					</tr>
 				</c:forEach>

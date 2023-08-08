@@ -26,7 +26,7 @@ public class UsuarioRepositorio {
 		
 		try (Connection conn = this.getConnection();
 			PreparedStatement pst = conn.prepareStatement(sql);) {
-		
+			;
 			
 			ResultSet resultSet = pst.executeQuery();
 			
@@ -51,14 +51,18 @@ public class UsuarioRepositorio {
 			
 			//Criar SQL do insert 
 			StringBuilder sql = new StringBuilder();
-			sql.append("insert into usuario ");
-			sql.append("nome, email, senha ");
-			sql.append("values (?, ?, ? ");
+			sql.append ("insert into usuario ");
+			sql.append("(nome, email, senha) ");
+			sql.append("values (?, ?, ?) ");
 			
 			//Abrir uma conexão
 			
 			try(Connection conn = this.getConnection();
-					PreparedStatme pst = conn.prepareStatement(sql, 0)){
+					PreparedStatement pst = conn.prepareStatement(sql.toString())){
+				pst.setString(1, usuario.getNome());
+				pst.setString(2, usuario.getEmail());
+				pst.setString(3, usuario.getSenha());
+				
 				pst.execute();
 				
 				conn.commit();
@@ -81,6 +85,4 @@ public class UsuarioRepositorio {
 	
 	
 	
-	
-	
-}
+
