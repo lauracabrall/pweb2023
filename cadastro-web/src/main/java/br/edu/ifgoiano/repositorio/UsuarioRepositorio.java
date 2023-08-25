@@ -43,7 +43,7 @@ return lstUsuario;
 
 }
 
-public void inserirUsuario(Usuario usuario) {
+public void inserirUsuario(br.edu.ifgoiano.entidade.Usuario usu) {
 //Criar a SQL de insert
 StringBuilder sql = new StringBuilder();
 sql.append("insert into usuario ");
@@ -54,9 +54,9 @@ try(Connection conn = this.getConnection();
 PreparedStatement pst = conn.prepareStatement(sql.toString());
 ) {
 
-pst.setString(1, usuario.getNome());
-pst.setString(2, usuario.getEmail());
-pst.setString(3, usuario.getSenha());
+pst.setString(1, usu.getNome());
+pst.setString(2, usu.getEmail());
+pst.setString(3, usu.getSenha());
 
 pst.execute();
 
@@ -94,5 +94,59 @@ ex.printStackTrace();
 }
 throw new RuntimeException("Usuario não encontrado");
 }
+
+
+public void alterarUsuario(Usuario usu) {
+
+	// Criar a sql de alterar
+	StringBuilder sql = new StringBuilder();
+	sql.append("update usuario set ");
+	sql.append("nome = ?, ");
+	sql.append("email = ?, ");
+	sql.append("senha = ? ");
+	sql.append("where id = ? ");
+
+	// Abrir uma conexão
+	try (Connection conn = this.getConnection(); PreparedStatement pst = conn.prepareStatement(sql.toString())) {
+		pst.setString(1, usu.getNome());
+		pst.setString(2, usu.getEmail());
+		pst.setString(3, usu.getSenha());
+		pst.setInt(4, usu.getId());
+		// pst.setString(1, usuario.getDataNascimento());
+
+		pst.execute();
+
+		conn.commit();
+
+	} catch (SQLException e) {
+		System.out.println("Erro na inclusão de usuarios");
+		e.printStackTrace();
+	}
+
+	// Preparar a sql para ser executada
+
 }
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+
+public void excluirUsuario(Usuario usuario) {
+	String sql = "delete from usuario where id = ?";
+
+	try (Connection conn = this.getConnection(); PreparedStatement pst = conn.prepareStatement(sql.toString())) {
+		pst.setInt(1, usuario.getId());
+		pst.execute();
+
+		conn.commit();
+	}
+
+	catch (SQLException e) {
+		System.out.println("Erro na exclusão ddo Usuario");
+		e.printStackTrace();
+	}
+}
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+
+}
+}

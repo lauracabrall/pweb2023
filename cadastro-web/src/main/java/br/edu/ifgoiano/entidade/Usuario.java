@@ -4,10 +4,15 @@ import java.sql.Date;
 
 public class Usuario {
 	private Integer id;
+	public Usuario(Integer id) {
+		super();
+		this.id = id;
+	}
 	private String email;
 	private String senha;
 	private String nome;
 	private Date dataNascimento;
+	
 	public Integer getId() {
 		return id;
 	}
